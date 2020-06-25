@@ -88,9 +88,12 @@ func NewTimeout(timeoutFunc func(duration time.Duration)) (*Timeout, error) {
 }
 
 // SetupLogger sets up Logrus with the log level determined by the Fluent Bit Env Var
-func SetupLogger() {
+func SetupLogger(level string) {
 	logrus.SetOutput(os.Stdout)
-	switch strings.ToUpper(os.Getenv(fluentBitLogLevelEnvVar)) {
+	if level == "" {
+		level = os.Getenv(fluentBitLogLevelEnvVar)
+	}
+	switch strings.ToUpper(level) {
 	default:
 		logrus.SetLevel(logrus.InfoLevel)
 	case "DEBUG":

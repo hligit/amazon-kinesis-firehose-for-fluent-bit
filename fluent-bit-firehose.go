@@ -82,7 +82,7 @@ func newFirehoseOutput(ctx unsafe.Pointer, pluginID int) (*firehose.OutputPlugin
 
 //export FLBPluginInit
 func FLBPluginInit(ctx unsafe.Pointer) int {
-	plugins.SetupLogger()
+	plugins.SetupLogger(output.FLBPluginConfigKey(ctx, "log_level"))
 
 	err := addPluginInstance(ctx)
 	if err != nil {
